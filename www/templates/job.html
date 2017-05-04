@@ -1,0 +1,598 @@
+<ion-view ng-init="job.init()">
+    <ion-nav-title>{{$root.active.job.name}}</ion-nav-title>
+    <div class="button-bar">
+        <a class="button" ng-class="{'button-positive': job.isLit('fnol')}" ng-click="job.setLit('fnol')">FNOL</a>
+        <!-- <a class="button" ng-class="{'button-positive': job.isLit('maps')}" ng-click="job.setLit('maps')">Maps</a> -->
+        <a class="button" ng-class="{'button-positive': job.isLit('feed')}" ng-click="job.setLit('feed')">Feed</a>
+    </div>
+    <ion-content style="margin-top: 60px; margin-bottom: 45px;">
+        <div ng-show="job.lit == 'fnol'">
+            <!-- JOB INFO WITH FORM-->
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Job Info
+                    <span ng-show="drop1"><button ng-click="edit1 =!edit1"><i class="ion-ios-locked" ng-show="!edit1"></i><i class="ion-ios-unlocked-outline"ng-show="edit1"></i></button></span>
+                    <a ng-click="drop1 =!drop1; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop1"></i><i class="icon ion-ios-arrow-up"ng-show="drop1"></i></a>
+                </div>
+                <div ng-show="drop1">
+                    <div ng-show="!edit1">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.name || 'Job Name'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.sqft}} Sq Ft
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.lossType || 'Loss Type'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.description || 'Description'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.status || 'Status'}}
+                        </div>
+                    </div>
+                    <form ng-show="edit1" class="editJob">
+                        <label class="item item-input">
+                            <span class="input-label">Job Name</span>
+                            <input type="text" ng-model="$root.active.job.name" ng-focus="ajustarScroll()" ng-blur="job.edit.submit(); ajustarScroll()" placeholder="Job 1">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Square Feet</span>
+                            <input type="text" ng-model="$root.active.job.sqft" ng-blur="job.edit.submit()" placeholder="2000">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Loss Type</span>
+                            <select ng-model="$root.active.job.lossType" ng-blur="job.edit.submit()">
+                                <option selected>Water Loss</option>
+                                <option>Fire Loss</option>
+                                <option>Fire/Water Loss</option>
+                                <option>Cleaning Nonrestoration</option>
+                                <option>Equipment Rental</option>
+                                <option>Other</option>
+                            </select>
+                        </label>
+                        <label class="item item-input">
+                            <textarea type="text" ng-model="$root.active.job.description" ng-blur="job.edit.submit()" placeholder="Write a description..."></textarea>
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Status</span>
+                            <select ng-model="$root.active.job.status" ng-blur="job.edit.submit()">
+                                <option selected>Billing</option>
+                                <option>Collected</option>
+                                <option>Collection</option>
+                                <option>Estimate</option>
+                                <option>In-Progress</option>
+                                <option>Lost</option>
+                            </select>
+                        </label>
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- IMAGE INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Job Image
+                    <span ng-show="drop20"><button ng-click="edit20 =!edit20"><i class="ion-ios-locked" ng-show="!edit20"></i><i class="ion-ios-unlocked-outline"ng-show="edit20"></i></button></span>
+                    <a ng-click="drop20 =!drop20; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop20"></i><i class="icon ion-ios-arrow-up"ng-show="drop20"></i></a>
+                </div>
+                <div ng-show="drop20">
+                    <div ng-show="!edit20">
+                        <div class="item item-text-wrap">
+                            <image src="{{$root.active.job.img}}"/>
+                        </div>
+                    </div>
+                    <form ng-show="edit20">
+                        <label class="item item-input">
+                            <span class="input-label">Image</span>
+                            <input type="text" ng-model="$root.active.job.img" ng-blur="job.edit.submit()" placeholder="Mystery Machine">
+                        </label>
+                        <div class="item item-divider">
+                            <span ng-controller="ImagesCtrl as images"><i ng-click="images.openCamera()" style="padding-right:20px" class="icon ion-android-camera"></i></span>
+
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- JOB MANAGEMENT WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Job Management
+                    <span ng-show="drop11"><button ng-click="edit11 =!edit11"><i class="ion-ios-locked" ng-show="!edit11"></i><i class="ion-ios-unlocked-outline"ng-show="edit11"></i></button></span>
+                    <a ng-click="drop11 =!drop11; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop11"></i><i class="icon ion-ios-arrow-up"ng-show="drop11"></i></a>
+                </div>
+                <div ng-show="drop11">
+                    <div ng-show="!edit11">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.pc || 'Project Coordinator'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.pm || 'Project Manager'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.startDate || 'Start Date/time'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.completeDate || 'Complete Date'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.initialProjection || 'Initial Projection'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.changeOrder || 'Change Order Amt'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.totalProjection || 'Total Projection'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.finalInvoice || 'Final Invoice'}}
+                        </div>
+                    </div>
+                    <form ng-show="edit11" ng-controller="UserListCtrl as users" ng-init="users.init()">
+                        <label class="item item-input">
+                            <span class="input-label">Project Coordinator</span>
+                            <select ng-model="$root.active.job.pc" ng-blur="job.edit.submit()">
+                                <option ng-repeat="user in users.data track by $index">{{user.name}}</option>
+                            </select>
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Project Manager</span>
+                            <select ng-model="$root.active.job.pm" ng-blur="job.edit.submit()">
+                                <option ng-repeat="user in users.data track by $index">{{user.name}}</option>
+                            </select>
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Start Date/time</span>
+                            <input type="text" ng-model="$root.active.job.startDate" ng-blur="job.edit.submit()" placeholder="April 22 2017, 23:00">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Complete Date</span>
+                            <input type="text" ng-model="$root.active.job.completeDate" ng-blur="job.edit.submit()" placeholder="April 25 2017">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Initial Projection</span>
+                            <input type="text" ng-model="$root.active.job.initialProjection" ng-blur="job.edit.submit()" placeholder="$1,000,000">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Change Order Amt</span>
+                            <input type="text" ng-model="$root.active.job.changeOrder" ng-blur="job.edit.submit()" placeholder="$500,000">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Total Projection</span>
+                            <input type="text" ng-model="$root.active.job.totalProjection" ng-blur="job.edit.submit()" placeholder="$1,500,000">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Final Invoice</span>
+                            <input type="text" ng-model="$root.active.job.finalInvoice" ng-blur="job.edit.submit()" placeholder="$4,000,000">
+                        </label>
+
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- CONTACT INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Contact Info
+                    <span ng-show="drop2"><button ng-click="edit2 =!edit2"><i class="ion-ios-locked" ng-show="!edit2"></i><i class="ion-ios-unlocked-outline"ng-show="edit2"></i></button></span>
+                    <a ng-click="drop2 =!drop2; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop2"></i><i class="icon ion-ios-arrow-up"ng-show="drop2"></i></a>
+                </div>
+                <div ng-show="drop2">
+                    <div ng-show="!edit2">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.contact || 'Contact'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            <a href="tel:{{$root.active.job.phone}}" style="z-index:10000">
+                                {{$root.active.job.phone}}
+                            </a>
+                        </div>
+                        <div class="item item-text-wrap" placeholder="email">
+                            <a href="mailto:{{$root.active.job.email}}">
+                                {{$root.active.job.email||'Email'}}
+                            </a>
+                        </div>
+                    </div>
+                    <form ng-show="edit2">
+                        <label class="item item-input">
+                            <span class="input-label">Contact</span>
+                            <input type="text" ng-model="$root.active.job.contact" ng-blur="job.edit.submit()" placeholder="Jane Smith">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Phone</span>
+                            <input type="text" ng-model="$root.active.job.phone" ng-blur="job.edit.submit()" placeholder="867-5309">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Email</span>
+                            <input type="text" ng-model="$root.active.job.email" ng-blur="job.edit.submit()" placeholder="jane@doe.com">
+                        </label>
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- ADDRESS INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Loss Address
+                    <span ng-show="drop3"><button ng-click="edit3 =!edit3"><i class="ion-ios-locked" ng-show="!edit3"></i><i class="ion-ios-unlocked-outline"ng-show="edit3"></i></button></span>
+                    <a ng-click="drop3 =!drop3; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop3"></i><i class="icon ion-ios-arrow-up"ng-show="drop3"></i></a>
+                </div>
+                <div ng-show="drop3">
+                    <div ng-show="!edit3">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.address || 'Address'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.city || 'City'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.state || 'State'}}
+                        </div>
+                    </div>
+                    <form ng-show="edit3">
+                        <label class="item item-input">
+                            <span class="input-label">Address</span>
+                            <input type="text" ng-model="$root.active.job.address" ng-blur="job.edit.submit()" placeholder="743 Evergreen Terrace">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">City</span>
+                            <input type="text" ng-model="$root.active.job.city" ng-blur="job.edit.submit()" placeholder="Springfield">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">State</span>
+                            <input type="text" ng-model="$root.active.job.state" ng-blur="job.edit.submit()" placeholder="NA">
+                        </label>
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- SERVPRO INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Servpro Info
+                    <span ng-show="drop4"><button ng-click="edit4 =!edit4"><i class="ion-ios-locked" ng-show="!edit4"></i><i class="ion-ios-unlocked-outline"ng-show="edit4"></i></button></span>
+                    <a ng-click="drop4 =!drop4"; ajustarScroll();><i class="icon ion-ios-arrow-down" ng-show="!drop4"></i><i class="icon ion-ios-arrow-up"ng-show="drop4"></i></a>
+                </div>
+                <div ng-show="drop4">
+                    <div ng-show="!edit5">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.localServpro || 'Local Servpro'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.localServproInvolv || 'Local SP Involvement'}}
+                        </div>
+                    </div>
+                    <form ng-show="edit5">
+                        <label class="item item-input">
+                            <span class="input-label">Local Servpro</span>
+                            <input type="text" ng-model="$root.active.job.localServpro" ng-blur="job.edit.submit()" placeholder="Stan and Bobby's Place">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">SP Involvement</span>
+                            <select ng-model="$root.active.job.localServproInvolv">
+                                <option selected>Local will provide Labor (GL, Supervisors, APM, PM, etc)'</option>
+                                <option>Local will provide Consumables</option>
+                                <option>Local will provide Equipment</option>
+                                <option>Local will be paying for Expenses - ex: Site services, subcontractors, any money spent</option>
+                                <option>Local will be Project Coordinator</option>
+                                <option>Local will NOT be providing any involvement</option>
+                            </select>
+                        </label>
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- INSURANCE INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Insurance Info
+                    <span ng-show="drop6"><button ng-click="edit6 =!edit6"><i class="ion-ios-locked" ng-show="!edit6"></i><i class="ion-ios-unlocked-outline"ng-show="edit6"></i></button></span>
+                    <a ng-click="drop6 =!drop6; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop6"></i><i class="icon ion-ios-arrow-up"ng-show="drop6"></i></a>
+                </div>
+                <div ng-show="drop6">
+                    <div ng-show="!edit6">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.insuranceCo || 'Insurance Company'}}
+                        </div>
+                    </div>
+                    <form ng-show="edit6">
+                        <label class="item item-input">
+                            <span class="input-label">Insurance Company</span>
+                            <input type="text" ng-model="$root.active.job.broker" ng-blur="job.edit.submit()" placeholder="Billy Bob">
+                        </label>
+
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- BROKER INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Broker Info
+                    <span ng-show="drop7"><button ng-click="edit7 =!edit7"><i class="ion-ios-locked" ng-show="!edit7"></i><i class="ion-ios-unlocked-outline"ng-show="edit7"></i></button></span>
+                    <a ng-click="drop7 =!drop7; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop7"></i><i class="icon ion-ios-arrow-up"ng-show="drop7"></i></a>
+                </div>
+                <div ng-show="drop7">
+                    <div ng-show="!edit7">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.broker || 'Broker'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            <a href="tel:{{$root.active.job.phone}}">{{$root.active.job.brokerPhone || 'Phone'}}</a>
+                        </div>
+                        <div class="item item-text-wrap" placeholder="email">
+                            <a href="mailto:{{$root.active.job.email}}">{{$root.active.job.brokerEmail ||'Email'}}</a>
+                        </div>
+                    </div>
+                    <form ng-show="edit7">
+                        <label class="item item-input">
+                            <span class="input-label">Broker</span>
+                            <input type="text" ng-model="$root.active.job.broker" ng-blur="job.edit.submit()" placeholder="Billy Bob">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Phone</span>
+                            <input type="text" ng-model="$root.active.job.brokerPhone" ng-blur="job.edit.submit()" placeholder="8004441111">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Email</span>
+                            <input type="text" ng-model="$root.active.job.brokerEmail" ng-blur="job.edit.submit()" placeholder="billy@bob.com">
+                        </label>
+
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- ADJUSTER INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Adjuster Info
+                    <span ng-show="drop8"><button ng-click="edit8 =!edit8"><i class="ion-ios-locked" ng-show="!edit8"></i><i class="ion-ios-unlocked-outline"ng-show="edit8"></i></button></span>
+                    <a ng-click="drop8 =!drop8; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop8"></i><i class="icon ion-ios-arrow-up"ng-show="drop8"></i></a>
+                </div>
+                <div ng-show="drop8">
+                    <div ng-show="!edit8">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.adjuster || 'Adjuster'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.adjustingFirm || 'Adjusting Firm'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            <a href="tel:+1-1800-555-5555">Call me</a>
+                        </div>
+                        <div class="item item-text-wrap" placeholder="email">
+                            <a href="mailto:{{$root.active.job.adjusterEmail}}">{{$root.active.job.adjusterEmail ||'Email'}}</a>
+                        </div>
+                    </div>
+                    <form ng-show="edit8">
+                        <label class="item item-input">
+                            <span class="input-label">Adjusting Firm</span>
+                            <input type="text" ng-model="$root.active.job.adjuster" ng-blur="job.edit.submit()" placeholder="Bobby Joe's Adjusting">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Adjuster</span>
+                            <input type="text" ng-model="$root.active.job.adjustingFirm" ng-blur="job.edit.submit()" placeholder="Bobby Joe">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Phone</span>
+                            <input type="text" ng-model="$root.active.job.adjusterPhone" ng-blur="job.edit.submit()" placeholder="8004441112">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Email</span>
+                            <input type="text" ng-model="$root.active.job.adjusterEmail" ng-blur="job.edit.submit()" placeholder="bobby@joe.com">
+                        </label>
+
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- CONSULTANT INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Consultant Info
+                    <span ng-show="drop9"><button ng-click="edit9 =!edit9"><i class="ion-ios-locked" ng-show="!edit9"></i><i class="ion-ios-unlocked-outline"ng-show="edit9"></i></button></span>
+                    <a ng-click="drop9 =!drop9; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop9"></i><i class="icon ion-ios-arrow-up"ng-show="drop9"></i></a>
+                </div>
+                <div ng-show="drop9">
+                    <div ng-show="!edit9">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.consultant || 'Consultant'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.consultingFirm || 'Consulting Firm'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            <a href="tel:{{$root.active.job.consultantPhone}}">{{$root.active.job.consultantPhone || 'Phone'}}</a>
+                        </div>
+                        <div class="item item-text-wrap" placeholder="email">
+                            <a href="mailto:{{$root.active.job.consultantEmail}}">{{$root.active.job.consultantEmail ||'Email'}}</a>
+                        </div>
+                    </div>
+                    <form ng-show="edit9">
+                        <label class="item item-input">
+                            <span class="input-label">Consulting Firm</span>
+                            <input type="text" ng-model="$root.active.job.consultant" ng-blur="job.edit.submit()" placeholder="Bobby Sue's Consulting">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Consultant</span>
+                            <input type="text" ng-model="$root.active.job.consultingFirm" ng-blur="job.edit.submit()" placeholder="Bobby Sue">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Phone</span>
+                            <input type="text" ng-model="$root.active.job.consultantPhone" ng-blur="job.edit.submit()" placeholder="8004441113">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Email</span>
+                            <input type="text" ng-model="$root.active.job.consultantEmail" ng-blur="job.edit.submit()" placeholder="bobby@sue.com">
+                        </label>
+
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        <!-- LEAD INFO WITH FORM-->
+
+            <div class="card">
+                <div class="item item-divider item-icon-right">
+                    Lead Info
+                    <span ng-show="drop10"><button ng-click="edit10 =!edit10"><i class="ion-ios-locked" ng-show="!edit10"></i><i class="ion-ios-unlocked-outline"ng-show="edit10"></i></button></span>
+                    <a ng-click="drop10 =!drop10; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop10"></i><i class="icon ion-ios-arrow-up"ng-show="drop10"></i></a>
+                </div>
+                <div ng-show="drop10">
+                    <div ng-show="!edit10">
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.lead || 'Lead Source'}}
+                        </div>
+                        <div class="item item-text-wrap">
+                            {{$root.active.job.leadSource || 'Lead'}}
+                        </div>
+                    </div>
+                    <form ng-show="edit10">
+                        <label class="item item-input">
+                            <span class="input-label">Lead Source</span>
+                            <input type="text" ng-model="$root.active.job.leadSource" ng-blur="job.edit.submit()" placeholder="Mystery Machine">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Lead</span>
+                            <input type="text" ng-model="$root.active.job.lead" ng-blur="job.edit.submit()" placeholder="Susie Bob">
+                        </label>
+
+                        <div class="item item-divider">
+                            <i class="assertive">You can edit now!</i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+    </div>
+        <!-- <div ng-show="job.lit == 'maps'">
+
+
+            <ion-view>
+                <ion-content>
+                    <h2>Your Location</h2>
+                    <div id="map" data-tap-disabled="true"></div>
+                    <h1>Job Location</h1>
+                </ion-content>
+            </ion-view>
+
+        </div> -->
+        <div ng-show="job.lit == 'feed'">
+            <ion-view ng-controller="JobFeedCtrl as jobFeed">
+                <ion-nav-title>{{$root.active.job.name}}</ion-nav-title>
+
+                    <ion-content ng-init="jobFeed.init()">
+                        <ion-list>
+
+                            <ion-item class="item-text-wrap slack-item-welcome">
+                                <div class="whiter">
+                                    <div class="float">
+                                        <h2>Welcome to the {{$root.active.job.name}} Job!</h2>
+                                        <p>This is the very beginning of the feed. It has <strong>{{$root.active.job.sqft}} square feet</strong>, and was created on <strong>{{$root.active.job.created | date: "EEE MMM d, h:mm a"}}</strong>.</p>
+                                    </div>
+                                </div>
+                            </ion-item>
+                            <div ng-repeat="feed in jobFeed.data" ng-switch on="feed.model">
+                                <div ng-switch on="feed.model">
+                                    <div ng-switch-when="Note">
+                                        <div class="list card">
+                                          <div class="item item-avatar">
+                                            <img src="avatar.jpg">
+                                            <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span> | <span>{{feed.area.name || 'Job Level'}}</span></p>
+                                            <h2>{{feed.item.text}}</h2>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="Image">
+                                        <div class="list card">
+                                          <div class="item item-avatar">
+                                            <img src="avatar.jpg">
+                                            <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.area.name || 'Job level'}}</span></p>
+                                          </div>
+                                          <div class="item item-image">
+                                            <img src="{{feed.item.url}}">
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="Activity">
+                                        <div class="list card">
+                                          <div class="item item-avatar">
+                                            <img src="avatar.jpg">
+                                            <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.area.name || 'Job level'}}</span></p>
+                                            <h2>{{feed.item.task.action.label}} {{feed.item.task.component.label}} {{feed.item.task.material.label}} {{feed.item.task.method.label}}</h2>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="Scope">
+                                        <div class="list card">
+                                          <div class="item item-avatar">
+                                            <img src="avatar.jpg">
+                                            <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.scope.name || 'Job level'}}</span></p>
+                                            <h2>Scope Created {{feed.scope.name}}</h2>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="Area">
+                                        <div class="list card">
+                                          <div class="item item-avatar">
+                                            <img src="avatar.jpg">
+                                            <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.area.name || 'Job level'}}</span></p>
+                                            <h2>Area Created {{feed.area.name}}</h2>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </ion-list>
+                </ion-content>
+            </div>
+
+        </div>
+
+            <!-- ng-class="{ocultar:!message.text}" -->
+        </div>
+    </div>
+    <br>
+
+</ion-content>
+<a href="#/app/scopes/{{$root.active.job._id}}">
+    <div class="bar bar-footer bar-assertive" >
+        <h1 class="title">Scope</h1>
+    </div>
+</a>
+</div>
+
+</ion-view>

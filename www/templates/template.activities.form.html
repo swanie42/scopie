@@ -1,0 +1,45 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Component</th>
+            <th>Material</th>
+            <th>Method</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select ng-model="activities.payload.action">
+                    <option disabled selected value="">
+                        Select action
+                    </option>
+                </select>
+            </td>
+            <td>
+                <select ng-model="activities.payload.component" ng-disabled="!activities.payload.action">
+                    <!-- ng-options="component._id as component.label for component in $root.enums.activity.components" -->
+                    <option disabled selected value="">
+                        Select a Component
+                    </option>
+                </select>
+            </td>
+            <td>
+                <select ng-model="activities.payload.material" ng-disabled="!activities.payload.component">
+                    <!-- ng-options="material._id as material.label for material in $root.enums.activity.materials" -->
+                    <option disabled selected value="">
+                        Select material
+                    </option>
+                </select>
+            </td>
+            <td>
+                <select ng-model="activities.payload.method" ng-disabled="!activities.payload.material">
+                    <!-- ng-options="method._id as method.label for method in $root.enums.activity.methods" -->
+                    <option disabled selected value="">
+                        Select method
+                    </option>
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>

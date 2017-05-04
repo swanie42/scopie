@@ -1,0 +1,81 @@
+<ion-view view-title="Scopes" ng-init="scopes.init()">
+    <ion-content ng-controller="ActivitiesListCtrl as activities" ng-init="activities.init()">
+        <ion-refresher
+              pulling-text="Pull to refresh..."
+              on-refresh="scopes.init()">
+        </ion-refresher>
+        <div class="card" ng-repeat="scope in $root.active.scopes">
+            <div class="item item-divider item-icon-right">
+                <a ui-sref="app.areas({ jobId: scopes.job, scopeId: scope._id })" ng-click="scopes.setActiveScope(scope)">{{scope.name}}</a>
+                <span ng-show="drop6"><button ng-click="edit6 =!edit6"><i class="ion-ios-locked" ng-show="!edit6"></i><i class="ion-ios-unlocked-outline"ng-show="edit6"></i></button></span>
+                <a ng-click="drop6 =!drop6"><i class="icon ion-ios-arrow-down" ng-show="!drop6"></i><i class="icon ion-ios-arrow-up"ng-show="drop6"></i></a>
+            </div>
+            <div ng-show="drop6">
+                <div ng-show="!edit6"><!-- This is the non-edit state -->
+                    <div>
+                        <div class="item item-text-wrap" ng-repeat="activity in $root.active.activities | filter: scope._id">
+                            <i class="icon right assertive ion-ios-trash" ng-click="activities.delete.submit(activity)"></i>
+                            {{activity.task.action.label}} {{activity.task.component.label}} {{activity.task.material.label}} {{activity.task.method.label}} {{activity.task.action.label}}
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="edit6"><!-- This is the edit state -->
+                    <label class="item item-input">
+                        <span class="input-label">Scope Name</span>
+                        <input type="text" ng-model="scope.name" ng-blur="scopes.edit.submit(scope)" placeholder="scope.name">
+                    </label>
+                    <div class="item item-input">
+                        <form style="width:100%" ng-submit="activities.add.submit(scope)">
+                            <div class="list">
+                                <label class="item item-input item-select">
+                                    <div class="input-label">
+                                        Action
+                                    </div>
+                                    <select ng-model="activities.select.action" ng-options="action._id as action.label for action in $root.enums.actions" ng-change="activities.filterOptions.components()">
+                                        <option disabled selected value="">Select an action</option>
+                                    </select>
+
+                                </label>
+                                <label class="item item-input item-select">
+                                    <div class="input-label">
+                                        Component
+                                    </div>
+                                    <select ng-model="activities.select.component" ng-disabled="!activities.select.action" ng-options="id as label for (id, label) in activities.enums.components" ng-change="activities.filterOptions.materials()">
+                                        <option disabled selected value="">Select a component</option>
+                                    </select>
+                                </label>
+                                <label class="item item-input item-select">
+                                    <div class="input-label">
+                                        Material
+                                    </div>
+                                    <select ng-model="activities.select.material" ng-disabled="!activities.select.component" ng-options="id as label for (id, label) in activities.enums.materials" ng-change="activities.filterOptions.methods()">
+                                        <option disabled selected value="">Select a material</option>
+                                    </select>
+                                </label>
+                                <label class="item item-input item-select">
+                                    <div class="input-label">
+                                        Method
+                                    </div>
+                                    <select ng-model="activities.payload.task" ng-disabled="!activities.select.material" ng-options="id as label for (id, label) in activities.enums.methods">
+                                        <option disabled selected value="">Select a method</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <button
+                            type="submit"
+                            class="button button-block button-positive"
+                            ng-disabled="!activities.payload.task"
+                            ng-click="edit6 =!edit6"
+                            >
+                            Submit
+                            </button>
+                        </div>
+                        </form>
+                </div><!--edit6 -->
+             </div><!--drop6 -->
+        </div>
+    </ion-content>
+    <div class="bar bar-footer bar-assertive" ng-click="openCreateNewScope()">
+        <h1 class="title">New Scope</h1>
+    </div>
+</ion-view>

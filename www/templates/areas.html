@@ -1,0 +1,19 @@
+<ion-view view-title="Areas" ng-init="areas.init()">
+  <ion-content>
+      <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="areas.init()">
+      </ion-refresher>
+      <div class="card" ng-repeat="area in $root.active.areas track by $index">
+
+      <div class="item item-divider item-icon-right">
+          <a ui-sref="app.area({ areaId: area._id, jobId: areas.job, scopeId: areas.scope })">{{area.name}}</a>
+           <span ng-show="drop6"><button ng-click="edit6 =!edit6"><i class="ion-ios-locked" ng-show="!edit6"></i><i class="ion-ios-unlocked-outline"ng-show="edit6"></i></button></span>
+       </div>
+    </div>
+
+  </ion-content>
+    <div class="bar bar-footer bar-assertive" ng-click="openCreateNewArea()">
+       <h1 class="title">New Area</h1>
+    </div>
+</ion-view>

@@ -1,0 +1,71 @@
+<ion-view ng-controller="AreaFeedCtrl as areaFeed" ng-init="area.init()">
+    <ion-nav-title>{{$root.active.area.name}}</ion-nav-title>
+
+    <ion-content ng-init="areaFeed.init()">
+
+        <ion-list>
+            <ion-item class="item-text-wrap slack-item-welcome">
+                <div class="whiter">
+                    <div class="float">
+                        <h2>Welcome to the {{$root.active.area.name}} Area!</h2>
+                        <p>This is the very beginning of the feed. It has <strong>{{$root.active.area.sqft}} square feet and a height of {{$root.active.area.dimensions.height}}</strong>, and was created on <strong>{{$root.active.area.created | date : 'MMM d, y h:mm a'}} </strong> by <strong>{{$root.session.name}}</strong>.</p>
+                    </div>
+                </div>
+            </ion-item>
+            <div ng-repeat="feed in areaFeed.data" ng-switch on="feed.model">
+                <div ng-switch on="feed.model">
+                    <div ng-switch-when="Note">
+                        <div class="list card">
+                          <div class="item item-avatar">
+                            <img src="avatar.jpg">
+                            <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span></p>
+                            <h2>{{feed.item.text}}</h2>
+                          </div>
+                        </div>
+                    </div>
+                    <div ng-switch-when="Image">
+                        <div class="list card">
+                          <div class="item item-avatar">
+                            <img src="avatar.jpg">
+                            <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span></p>
+                          </div>
+                          <div class="item item-image">
+                            <img src="{{feed.item.url}}">
+                          </div>
+                        </div>
+                    </div>
+                    <div ng-switch-when="Activity">
+                        <div class="list card">
+                          <div class="item item-avatar">
+                            <img src="avatar.jpg">
+                            <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.area.name || 'Job level'}}</span></p>
+                            <h2>{{feed.item.task.action.label}} {{feed.item.task.component.label}} {{feed.item.task.material.label}} {{feed.item.task.method.label}}</h2>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </ion-list>
+
+</ion-content>
+<div keyboard-attach class="bar bar-footer bar-stable item-input-inset slack-menssage-bar" ng-controller="AreaNotesCtrl as areaNotes">
+    <span><i ng-click="openModal(1)" style="padding-left:15px;padding-right:20px" class="icon ion-android-locate"></i></span>
+    <span ng-controller="ImagesCtrl as images"><i ng-click="images.openCamera()" style="padding-right:20px" class="icon ion-android-camera"></i></span>
+    <span><i ng-click="openModal(2)" style="padding-right:20px" class="icon ion-ios-information"></i></span>
+
+        <label class="item-input-wrapper" >
+            <input type="text" placeholder="Note" ng-focus="area.scrollBottom()" ng-blur="area.scrollBottom()" ng-model="areaNotes.payload.text">
+        </label>
+        <div  value="Emit Up" ng-click="areaNotes.add.submit(); OnClick($event)" ng-class="{ocultar:!areaNotes.payload.text}" class="button button-clear button-positive">
+            Add
+        </div>
+
+
+
+</div>
+</ion-view>
+<!-- <ion-item class="slack-item-message">
+    <img src="{{feed.avatar}}" alt="avatar">
+    <h2>{{feed.user.name}} <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span></h2>
+    <p>{{feed.item.text}}</p>
+</ion-item> -->

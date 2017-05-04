@@ -1,0 +1,40 @@
+<ion-view view-title="Jobs" class="item-icon-right">
+    <div class="button-bar">
+        <a class="button" ng-class="{'button-positive': jobs.isLit('aJobs')}" ng-click="jobs.setLit('aJobs')">ALL JOBS</a>
+        <a class="button" ng-class="{'button-positive': jobs.isLit('mJobs')}" ng-click="jobs.setLit('mJobs')">MY JOBS</a>
+    </div>
+  <ion-content style="margin-top: 60px;">
+    <ion-refresher
+          pulling-text="Pull to refresh..."
+          on-refresh="jobs.init()">
+    </ion-refresher>
+    <ion-list ng-show="jobs.lit == 'aJobs'">
+        <a class="item item-thumbnail-left" ng-repeat="job in $root.jobs | orderBy: '-created'" ui-sref="app.job({ jobId: job._id })">
+          <img src={{job.img}}>
+    <span class="item-note">
+        {{job.pc}}
+       </span>
+          <h2>{{job.name}}</h2>
+          <p>{{job.city}}, {{job.state}} </p>
+          <p>{{job.sqft}} sqft | {{job.lossType}} | {{job.created | date: "M/d/yy"}} </p>
+        </a>
+    </ion-list>
+    <ion-list ng-show="jobs.lit == 'mJobs'">
+        <a  class="item item-thumbnail-left"
+            ng-repeat="job in $root.jobs
+            | filter: { pc:$root.session.name }"
+            ui-sref="app.job({ jobId: job._id })">
+          <img src={{job.img}}>
+    <span class="item-note">
+        {{job.pm}}
+       </span>
+          <h2>{{job.name}}</h2>
+          <p>{{job.city}}, {{job.state}} </p>
+          <p>{{job.sqft}} sqft | {{job.lossType}} | {{job.created | date: "M/d/yy"}}</p>
+        </a>
+    </ion-list>
+  </ion-content>
+  <div class="bar bar-footer" ng-click="openCreateNewJob()">
+     <h1 class="title">New Job</h1>
+  </div>
+</ion-view>

@@ -1,0 +1,69 @@
+
+<ion-modal-view ng-controller="ActivitiesEditCtrl as activities">
+    <ion-header-bar>
+        <h1 class="title">Edit Activities</h1>
+        <div class="buttons">
+            <button class="button button-primary" ng-click="closeModal(1)">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content ng-init="activities.init()" scroll="false">
+        <form ng-submit="activities.add.submit()">
+            <div class="list">
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Action
+                    </div>
+                    <select ng-model="activities.select.action" ng-options="action._id as action.label for action in $root.enums.actions" ng-change="activities.filterOptions.components()">
+                        <option disabled selected value="">Select an action</option>
+                    </select>
+
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Component
+                    </div>
+                    <select ng-model="activities.select.component" ng-disabled="!activities.select.action" ng-options="id as label for (id, label) in activities.enums.components" ng-change="activities.filterOptions.materials()">
+                        <option disabled selected value="">Select a component</option>
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Material
+                    </div>
+                    <select ng-model="activities.select.material" ng-disabled="!activities.select.component" ng-options="id as label for (id, label) in activities.enums.materials" ng-change="activities.filterOptions.methods()">
+                        <option disabled selected value="">Select a material</option>
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Method
+                    </div>
+                    <select ng-model="activities.payload.task" ng-disabled="!activities.select.material" ng-options="id as label for (id, label) in activities.enums.methods">
+                        <option disabled selected value="">Select a method</option>
+                    </select>
+                </label>
+            <button class="button button-block button-positive" ng-disabled="!activities.payload.task" type="submit">Submit</button>
+        <ion-scroll zooming="false" direction="y" style="width: 100%; height: 100vh">
+            <div style="width: 100%; height: auto;">
+                <div class="list list-inset">
+                    <div class="item item-divider">
+                        Area Activities
+                    </div>
+                    <div ng-repeat="activity in $root.active.activities | filter: area_id">
+                        <div class="item">
+                            <i class="icon right assertive ion-ios-trash" ng-click="activities.delete.submit(activity)"></i>
+                            {{ activity.task.action.label }} {{ activity.task.component.label }} {{ activity.task.material.label }} {{ activity.task.method.label }}
+                        </div>
+                    </div>
+                </div>
+                <!-- <div ng-hide="$root.active.activities | filter: area_id">
+                    <div colspan="5"><span>There are no activities for this area.</span></div>
+                </div> -->
+            </div>
+        </ion-scroll>
+    </div>
+</form>
+
+    </ion-content>
+</ion-modal-view>

@@ -1,0 +1,36 @@
+
+<ion-modal-view ng-controller="AreasCreateCtrl as areasCreate">
+  <ion-header-bar>
+    <h1 class="title">New Area</h1>
+    <div class="buttons">
+      <button class="button button-primary" ng-click="closeModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="areasCreate.add.submit()">
+      <div class="list list-inset">
+        <label class="item item-input">
+            <span class="input-label">Area Name</span>
+            <input type="text" ng-model="areasCreate.payload.name" placeholder="Area 1">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Square Feet</span>
+
+            <input type="number" ng-model="areasCreate.payload.sqft" placeholder="2500">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Room Height</span>
+
+            <input type="number" ng-model="areasCreate.payload.dimensions.height" placeholder="10">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Area description</span>
+
+            <input type="text" ng-model="areasCreate.payload.description" placeholder="It was a dark and stormy night..."></input>
+        </label>
+
+      </div>
+            <button class="button button-block button-positive" type="submit">Submit</button>
+    </form>
+  </ion-content>
+</ion-modal-view>

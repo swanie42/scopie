@@ -1,0 +1,74 @@
+
+<ion-modal-view ng-controller="ScopesCreateCtrl as scopesCreate">
+    <ion-header-bar>
+        <h1 class="title">New Scope</h1>
+        <div class="buttons">
+            <button class="button button-primary" ng-click="closeModal()">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content ng-controller="ActivitiesEditCtrl as activities">
+        <form ng-submit="scopesCreate.add.submit()">
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <span class="input-label">Scope Name</span>
+                    <input type="text" name="name" ng-model="scopesCreate.payload.name" placeholder="Scope 1">
+                </label>
+            </div>
+            <div class="list">
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Action
+                    </div>
+                    <select ng-model="activities.select.action" ng-options="action._id as action.label for action in $root.enums.actions" ng-change="activities.filterOptions.components()">
+                        <option disabled selected value="">Select an action</option>
+                    </select>
+
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Component
+                    </div>
+                    <select ng-model="activities.select.component" ng-disabled="!activities.select.action" ng-options="id as label for (id, label) in activities.enums.components" ng-change="activities.filterOptions.materials()">
+                        <option disabled selected value="">Select a component</option>
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Material
+                    </div>
+                    <select ng-model="activities.select.material" ng-disabled="!activities.select.component" ng-options="id as label for (id, label) in activities.enums.materials" ng-change="activities.filterOptions.methods()">
+                        <option disabled selected value="">Select a material</option>
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Method
+                    </div>
+                    <select ng-model="scopesCreate.payload.task" ng-disabled="!activities.select.material" ng-options="id as label for (id, label) in activities.enums.methods">
+                        <option disabled selected value="">Select a method</option>
+                    </select>
+                </label>
+                <button class="button button-block button-positive" type="button" ng-disabled="!scopesCreate.payload.task" ng-click="scopesCreate.add.activity(scopesCreate.payload.task)">Add Activity</button>
+                <button ng-show"!enableSave(data)" ng-disabled="!scopesCreate.payload.name" class="button button-block button-positive" type="submit">Submit</button>
+
+                <ion-scroll zooming="false" direction="y" style="width: 100%; height: 100vh">
+                    <div style="width: 100%; height: auto;">
+                        <div class="list list-inset">
+                            <div class="item item-divider">
+                                Scope Activities
+                            </div>
+                            <div ng-repeat="task in scopesCreate.tasks track by $index">
+                                <div class="item">
+                                    <i class="icon right assertive ion-ios-trash" ng-click="scopesCreate.add.removeActivity(task._id)"></i>
+                                    {{ task.action.label }} {{ task.component.label }} {{ task.material.label }} {{ task.method.label }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-scroll>
+            </div>
+        </form>
+
+    </ion-content>
+</ion-modal-view>

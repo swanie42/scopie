@@ -1,0 +1,51 @@
+{
+  "name": "rb-ionic",
+  "version": "1.1.1",
+  "description": "rb-ionic: An Ionic project",
+  "scripts": {
+    "preinstall": "sudo npm install -g cordova ionic",
+    "start": "ionic run ios -l -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:tango31/ionic.readyboard.co.git"
+  },
+  "dependencies": {
+    "angular-local-storage": "^0.5.2",
+    "angular-route": "^1.6.4",
+    "angular-socket-io": "^0.7.0",
+    "cordova": "^6.5.0",
+    "cordova-plugin-compat": "^1.1.0",
+    "gulp": "^3.5.6",
+    "gulp-concat": "^2.2.0",
+    "gulp-minify-css": "^0.3.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^2.0.4",
+    "ionic": "^2.2.2",
+    "ng-file-upload": "^12.2.13",
+    "sio": "0.0.4",
+    "socket.io": "^1.7.3"
+  },
+  "devDependencies": {
+    "bower": "^1.3.3",
+    "gulp-util": "^2.2.14",
+    "shelljs": "^0.3.0"
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-whitelist",
+    "cordova-plugin-console",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-device",
+    "ionic-plugin-keyboard",
+    "org.apache.cordova.console"
+  ],
+  "cordovaPlatforms": [
+    "ios",
+    {
+      "platform": "ios",
+      "version": "",
+      "locator": "ios"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+
+<ion-modal-view ng-controller="DimensionsEditCtrl as dimensionsEdit">
+  <ion-header-bar>
+    <h1 class="title">{{$root.active.area.name}} info</h1>
+    <div class="buttons">
+      <button class="button button-primary" ng-click="closeModal(2)">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="dimensionsEdit.edit.submit();">
+      <div class="list list-inset">
+        <label class="item item-input">
+            <span class="input-label">Area Name</span>
+            <input type="text" ng-model="$root.active.area.name" placeholder="{{$root.active.area.name}}">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Square Feet</span>
+            <input type="text" ng-model="$root.active.area.sqft" placeholder="2000">
+        </label>
+        <!-- <label class="item item-input">
+            <span class="input-label">Length</span>
+            <input type="text" ng-model="$root.active.area.dimensions.length" placeholder="2000">
+        </label> -->
+        <label class="item item-input">
+            <span class="input-label">Height</span>
+            <input type="text" ng-model="$root.active.area.dimensions.height" placeholder="10">
+        </label>
+        <!-- <label class="item item-input">
+            <span class="input-label">Width</span>
+            <input type="text" ng-model="$root.active.area.dimensions.width" placeholder="2000">
+        </label> -->
+      </div>
+        <button class="button button-block button-positive" type="submit">Submit</button>
+    </form>
+  </ion-content>
+</ion-modal-view>
