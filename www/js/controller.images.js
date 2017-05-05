@@ -5,13 +5,18 @@ angular.module('starter.controllers')
     '$stateParams',
     'factory.api',
     '$cordovaCamera',
-    function($scope, $rootScope, $stateParams, API, $cordovaCamera) {
+    '$ionicPopup',
+    function($scope, $rootScope, $stateParams, API, $cordovaCamera, $ionicPopup) {
         // //console.log('AREA controller is running');
         var images = this;
 
         images.payload = {};
         images.openCamera = function () {
-            //console.log('OPEN CAMERA');
+            // console.log('OPEN CAMERA');
+            // var alertPopup1 = $ionicPopup.alert({
+            //     title: 'Open Camera?',
+            //     template: 'Is this working?'
+            // });
             var options = {
                 quality: 100,
                 destinationType: Camera.DestinationType.DATA_URL,
@@ -21,7 +26,8 @@ angular.module('starter.controllers')
                 targetWidth: 300,
                 targetHeight: 300,
                 popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false
+                saveToPhotoAlbum: false,
+                correctOrientation:true
             };
 
             $cordovaCamera.getPicture(options)

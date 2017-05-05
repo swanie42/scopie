@@ -1,4 +1,4 @@
-var API_ENDPOINT = "//api.readyboard.co";
+var API_ENDPOINT = "https://api.readyboard.co";
 
 angular.module('starter.controllers')
     .factory('factory.api', [

@@ -1,6 +1,6 @@
-var API_ENDPOINT = "//api.readyboard.co";
+var API_ENDPOINT = "https://api.readyboard.co";
 //'ngRoute', 'ngFileUpload', add these to the array below
-angular.module('starter.controllers', ['ngRoute', 'ngFileUpload', 'ngCordova', 'ionic', 'ngRoute'])
+angular.module('starter.controllers', ['ngRoute', 'ngFileUpload', 'ngCordova', 'ionic'])
 
 .controller(
     'AppCtrl', ['$scope','$ionicModal', '$timeout', '$http', '$rootScope', '$cordovaCamera', '$ionicPopup', '$state', '$window', '$ionicHistory','factory.enums', 'factory.api',
@@ -104,16 +104,16 @@ angular.module('starter.controllers', ['ngRoute', 'ngFileUpload', 'ngCordova', '
             email: $scope.loginData.email,
             password: $scope.loginData.password
         }).then(function(res) {
-            console.log("This his the http post login response", res);
+            console.log("This is the http post login response", res);
             localStorage.setItem('readyboard.token', res.data.token);
             localStorage.setItem('readyboard.user', JSON.stringify(res.data.user));
             //console.log('res from controllers.js: ', res);
             getEnums();
             $state.go('app.jobs');
         }, function(err) {
-            var alertPopup = $ionicPopup.alert({
+            var alertPopup2 = $ionicPopup.alert({
                 title: 'Login failed!',
-                template: 'Please check your credentials!'
+                template: 'Please check your credential!'
             });
             //console.log('this is an error: ', err.data);
         });
