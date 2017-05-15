@@ -532,7 +532,10 @@
                                           <div class="item item-avatar">
                                             <img src="avatar.jpg">
                                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span> | <span>{{feed.area.name || 'Job Level'}}</span></p>
-                                            <h2>{{feed.item.text}}</h2>
+                                          </div>
+                                          <div class="item item-avatar">
+                                            <p>{{feed.item.text}}</p>
+                                          </div>
                                           </div>
                                         </div>
                                     </div>
