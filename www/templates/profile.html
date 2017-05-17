@@ -4,15 +4,14 @@
   <form ng-controller="ImagesCtrl as images" ng-submit="user.edit.submit()">
       <label class="item item-input">
           <span class="input-label">Image</span>
-          <input type="text" ng-model="user.data.image">
       </label>
       <div class="item item-divider">
-          <span><i ng-click="images.openCamera()" style="padding-right:20px" class="icon ion-android-camera"></i></span>
+          <span><i ng-click="images.openCamera()" style="padding-right:20px; font-size:200%" class="icon ion-android-camera"></i></span>
           <i class="assertive">You can edit now!</i>
+          <button type="submit">Submit</button>
       </div>
-      <button type="submit">Submit</button>
   </form>
-  <image src="{{user.data.image}}"/>
+  <image style="margin-left: auto; margin-right: auto; display: block; border-radius:50%" src="{{user.data.image}}"/>
     <h3>Username: <strong>{{user.data.name}}</strong></h3>
     <h3>Email: <strong>{{user.data.email}}</strong></h3>
   </ion-content>

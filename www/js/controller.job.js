@@ -46,15 +46,20 @@ angular.module('starter.controllers')
         job.edit = {
             submit: function() {
                 //console.log('job.edit.sumit is happening');
-                API.edit('jobs',$stateParams.jobId, $rootScope.active.job)
+                API.edit('jobs',$stateParams.jobId)
                 .then(job.edit.success,job.edit.error);
                 //console.log('$stateParams.jobId & $rootScope.active.job: ', $stateParams.jobId, $rootScope.active.job)
-
             },
             success: function(res) {
+                job.data = res.data;
                 $ionicPopup.alert({
                     title: 'Job Updated!',
                 });
+                job.init();
+
+                $rootScope.$broadcast('feed:new:image', res.data);
+                $rootScope.$broadcast('jobs:new:image', res.data);
+
             },
             error: API.debug.error
         };
@@ -79,9 +84,8 @@ angular.module('starter.controllers')
         // }, function(error){
         //     //console.log("Could not get location");
         // });
-
-
-    }])
+    }
+]);
 
     // job.clicked = function(num) {
     //     //console.log('Clicked is clicked')

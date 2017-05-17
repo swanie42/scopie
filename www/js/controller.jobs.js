@@ -13,6 +13,8 @@ angular.module('starter.controllers')
             .then(jobs.get.success, jobs.get.error)
             .finally(jobs.get.finally);
         };
+        
+        $scope.$on('jobs:new:image', jobs.init);
 
         jobs.get = {
             success: function(res) {
@@ -66,5 +68,7 @@ angular.module('starter.controllers')
         };
 
         jobs.init();
+
+
 
     }]);

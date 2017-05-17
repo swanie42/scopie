@@ -6,6 +6,10 @@
         <a class="button" ng-class="{'button-positive': job.isLit('feed')}" ng-click="job.setLit('feed')">Feed</a>
     </div>
     <ion-content style="margin-top: 60px; margin-bottom: 45px;">
+        <ion-refresher
+              pulling-text="Pull to refresh..."
+              on-refresh="job.init()">
+        </ion-refresher>
         <div ng-show="job.lit == 'fnol'">
             <!-- JOB INFO WITH FORM-->
             <div class="card">
@@ -77,26 +81,24 @@
             <div class="card">
                 <div class="item item-divider item-icon-right">
                     Job Image
-                    <span ng-show="drop20"><button ng-click="edit20 =!edit20"><i class="ion-ios-locked" ng-show="!edit20"></i><i class="ion-ios-unlocked-outline"ng-show="edit20"></i></button></span>
                     <a ng-click="drop20 =!drop20; ajustarScroll();"><i class="icon ion-ios-arrow-down" ng-show="!drop20"></i><i class="icon ion-ios-arrow-up"ng-show="drop20"></i></a>
                 </div>
                 <div ng-show="drop20">
-                    <div ng-show="!edit20">
-                        <div class="item item-text-wrap">
+                    <form ng-controller="ImagesCtrl as images" ng-submit="job.edit.submit()">
+                        <label class="item item-input">
+                            <span class="input-label">Image</span>
+                        </label>
+                        <div class="item item-divider">
+                            <span><i ng-click="images.openCamera()" style="padding-right:20px; font-size:200%" class="icon ion-android-camera"></i></span>
+                            <i class="assertive">You can edit now!</i>
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                    <div>
+                        <div class="item item-text-wrap" ng-controller="ImagesCtrl as images">
                             <image src="{{$root.active.job.img}}"/>
                         </div>
                     </div>
-                    <form ng-show="edit20">
-                        <label class="item item-input">
-                            <span class="input-label">Image</span>
-                            <input type="text" ng-model="$root.active.job.img" ng-blur="job.edit.submit()" placeholder="Mystery Machine">
-                        </label>
-                        <div class="item item-divider">
-                            <span ng-controller="ImagesCtrl as images"><i ng-click="images.openCamera()" style="padding-right:20px" class="icon ion-android-camera"></i></span>
-
-                            <i class="assertive">You can edit now!</i>
-                        </div>
-                    </form>
                 </div>
             </div>
 
@@ -530,7 +532,7 @@
                                     <div ng-switch-when="Note">
                                         <div class="list card">
                                           <div class="item item-avatar">
-                                            <img src="avatar.jpg">
+                                              <img ng-src="{{feed.user.image}}" alt="{{feed.user.name.charAt(0)}}" />
                                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span> | <span>{{feed.area.name || 'Job Level'}}</span></p>
                                           </div>
                                           <div class="item item-avatar">
@@ -542,7 +544,7 @@
                                     <div ng-switch-when="Image">
                                         <div class="list card">
                                           <div class="item item-avatar">
-                                            <img src="avatar.jpg">
+                                              <img ng-src="{{feed.user.image}}" alt="{{feed.user.name.charAt(0)}}" />
                                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.area.name || 'Job level'}}</span></p>
                                           </div>
                                           <div class="item item-image">
@@ -553,7 +555,7 @@
                                     <div ng-switch-when="Activity">
                                         <div class="list card">
                                           <div class="item item-avatar">
-                                            <img src="avatar.jpg">
+                                              <img ng-src="{{feed.user.image}}" alt="{{feed.user.name.charAt(0)}}" />
                                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.area.name || 'Job level'}}</span></p>
                                             <h2>{{feed.item.task.action.label}} {{feed.item.task.component.label}} {{feed.item.task.material.label}} {{feed.item.task.method.label}}</h2>
                                           </div>
@@ -562,7 +564,7 @@
                                     <div ng-switch-when="Scope">
                                         <div class="list card">
                                           <div class="item item-avatar">
-                                            <img src="avatar.jpg">
+                                              <img ng-src="{{feed.user.image}}" alt="{{feed.user.name.charAt(0)}}" />
                                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.scope.name || 'Job level'}}</span></p>
                                             <h2>Scope Created {{feed.scope.name}}</h2>
                                           </div>
@@ -571,7 +573,7 @@
                                     <div ng-switch-when="Area">
                                         <div class="list card">
                                           <div class="item item-avatar">
-                                            <img src="avatar.jpg">
+                                              <img ng-src="{{feed.user.image}}" alt="{{feed.user.name.charAt(0)}}" />
                                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.area.name || 'Job level'}}</span></p>
                                             <h2>Area Created {{feed.area.name}}</h2>
                                           </div>

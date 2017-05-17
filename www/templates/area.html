@@ -16,8 +16,8 @@
                 <div ng-switch on="feed.model">
                     <div ng-switch-when="Note">
                         <div class="list card">
-                          <div class="item item-avatar">
-                            <img src="avatar.jpg">
+                          <div class="item item-avatar" >
+                            <img ng-src="{{feed.user.image}}" alt="{{feed.user.name.charAt(0)}}" />
                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span></p>
                          </div>
                          <div class="item item-body">
@@ -29,7 +29,7 @@
                     <div ng-switch-when="Image">
                         <div class="list card">
                           <div class="item item-avatar">
-                            <img src="avatar.jpg">
+                              <img ng-src="{{feed.user.image}}" alt="{{feed.user.name.charAt(0)}}" />
                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span></p>
                           </div>
                           <div class="item item-image">
@@ -40,7 +40,7 @@
                     <div ng-switch-when="Activity">
                         <div class="list card">
                           <div class="item item-avatar">
-                            <img src="avatar.jpg">
+                              <img ng-src="{{feed.user.image}}" alt="{{feed.user.name.charAt(0)}}" />
                             <p>{{feed.user.name}} | <span>{{feed.created | date: "EEE MMM d, h:mm a"}}</span><span> | {{feed.area.name || 'Job level'}}</span></p>
                             <h2>{{feed.item.task.action.label}} {{feed.item.task.component.label}} {{feed.item.task.material.label}} {{feed.item.task.method.label}}</h2>
                           </div>
@@ -53,7 +53,7 @@
 </ion-content>
 <div keyboard-attach class="bar bar-footer bar-stable item-input-inset slack-menssage-bar" ng-controller="AreaNotesCtrl as areaNotes">
     <span><i ng-click="openModal(1)" style="padding-left:15px;padding-right:30px; font-size: 200%" class="icon ion-android-locate"></i></span>
-    <span ng-controller="ImagesCtrl as images"><i ng-click="images.openCamera()" style="padding-right:30px; font-size: 200%" class="icon ion-android-camera"></i></span>
+    <span ng-controller="ImagesCtrl as images"><i ng-click="images.rapidCamera()" style="padding-right:30px; font-size: 200%" class="icon ion-android-camera"></i></span>
     <span><i ng-click="openModal(2)" style="padding-right:30px; font-size: 200%" class="icon ion-ios-information"></i></span>
 
         <label class="item-input-wrapper" >

@@ -10,6 +10,7 @@ angular.module('starter.controllers')
         // //console.log('AREA controller is running');
         var images = this;
 
+
         images.payload = {};
         images.openCamera = function () {
             // console.log('OPEN CAMERA');
@@ -36,8 +37,43 @@ angular.module('starter.controllers')
                 images.payload.images = [imageData];
 
                 //console.log('GET PICTURE:');
-
                 images.add.submit();
+
+                //console.log('submit is happening!!!')
+
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
+        }
+        images.rapidCamera = function () {
+            // console.log('OPEN CAMERA');
+            // var alertPopup1 = $ionicPopup.alert({
+            //     title: 'Open Camera?',
+            //     template: 'Is this working?'
+            // });
+            var options = {
+                quality: 100,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 300,
+                targetHeight: 300,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false,
+                correctOrientation:true
+            };
+
+            $cordovaCamera.getPicture(options)
+                .then(function (imageData) {
+
+                images.payload.images = [imageData];
+
+                //console.log('GET PICTURE:');
+                images.add.submit();
+                images.rapidCamera();
+
+
                 //console.log('submit is happening!!!')
 
             }, function (err) {
@@ -47,6 +83,7 @@ angular.module('starter.controllers')
         images.add = {
             submit: function() {
                 //console.log('images submit happening!');
+
                 images.payload.area = $stateParams.areaId;
                 images.payload.user = $rootScope.session._id;
                 images.payload.job =  $stateParams.jobId;
@@ -65,12 +102,18 @@ angular.module('starter.controllers')
                 // if(!res.data.area){
                 //     $rootScope.active.job.img = res.data.url;
                 // }
-                $rootScope.$broadcast("feed:new:image", res.data);
+
                 //console.log('IMAGE BROADCAST');
                 images.data = res.data.concat(images.data);
                 //console.log('images.data[0]._id', images.data[0]._id);
+                $rootScope.$broadcast('feed:new:image', res.data);
                 images.payload = {};
 
+
+                // var alertPopup1 = $ionicPopup.alert({
+                //     title: 'Success',
+                //     template: 'Image was uploaded'
+                // });
 
             },
             error: API.debug.error

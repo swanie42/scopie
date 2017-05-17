@@ -18,6 +18,8 @@ angular.module('starter.controllers')
             success: function(res) {
                 areaFeed.data = res.data;
                 //console.log("is anything here?",res);
+                console.log('areaFeed.data', areaFeed.data);
+
                 areaFeed.data.avatar = 'JK';
                 areaFeed.scrollBottom();
             },
